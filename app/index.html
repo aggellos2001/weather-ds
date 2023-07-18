@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<!--
+ Copyright (C) 2023 Michail Angelos Tsiantakis
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as
+ published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ -->
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Μετεωρολογικός Σταθμός Ψηφιακών Συστημάτων</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+
+<body class="mx-auto bg-light-subtle w-75 pt-2 pb-5">
+    <p class="my-4 fs-4 text-center">
+        Μετεωρολογικός Σταθμός Ψηφιακών Συστημάτων
+    </p>
+    <p class="fs-5">Καλώς ήρθατε στην σελίδα του μετεωρολογικού σταθμού
+        του Τμήματος Ψηφιακών Συστημάτων του Πανεπιστημίου Θεσσσαλίας που βρίσκεται στο
+        συγκρότημα Γαιόπολις στην Λάρισα.
+    </p>
+    <p class="htmx-indicator fs-4">
+        Loading... <span id="spinner" class="spinner-border"></span>
+    </p>
+    <div class="w-50 mx-auto text-center">
+        <p id='last-updated' hx-swap-oob='true'></p>
+    </div>
+    <section class="container" hx-select-oob="#hum-bar,#pm25-bar,#pm10-bar">
+        <div class="row">
+            <div class="col">
+                <p>Θερμοκρασία</p>
+                <div hx-get="/weather/get-weather" hx-trigger="load delay:1s, every 5m" hx-swap="outerHTML"
+                    hx-indicator="#spinner" hx-target="#temp-bar" class="progress" role="progressbar"
+                    aria-valuemin="-20" aria-valuemax="50" style="height:30px">
+                    <div id="temp-bar" class="progress-bar" style="width: 0%;">
+                    </div>
+                </div>
+                <span>(Εύρος τιμών μπάρας -20 - +50)</span>
+            </div>
+            <div class="col">
+                <p>Υγρασία</p>
+                <div hx-swap-oob='true' class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="height:30px">
+                    <div id="hum-bar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <span>(Εύρος τιμών μπάρας 0-100)</span>
+            </div>
+        </div>
+        <p class="my-3 fs-5">Στα πλαίσια του μαθήματος Εφαρμογές Ψηφιακών Συστημάτων στο Περιβάλλον
+            τοποθετήθηκε αισθητήρας μέτρησης αιωρούμενων σωματιδίων ο οποίος
+            μπορεί να μετρήσει τα σωματίδια PM1, PM2.5, PM4 και PM10.</p>
+        <div class="w-50 mx-auto text-center">
+            <p id='last-updated-pm' hx-swap-oob='true' class='mx-1 px-1 rounded-4 text-bg-success fs-6 fst-italic'>
+            </p>
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                <p>PM2.5</p>
+                <div hx-swap-oob=true class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="110"
+                    style="height:30px">
+                    <div id="pm25-bar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <span>(Εύρος τιμών μπάρας 0-110)</span>
+            </div>
+            <div class="col">
+                <p>PM10</p>
+                <div hx-swap-oob="true" class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="240"
+                    style="height:30px">
+                    <div id="pm10-bar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <p>(Εύρος τιμών μπάρας 0-240)</p>
+            </div>
+        </div>
+    </section>
+    <footer class="fs-5 py-5">
+        <div>Ο μετεωρολογικός σταθμός είναι τύπου Davis Vantage Pro 2 Plus και τοποθετήθηκε με την ευθύνη του
+            <a target="_blank" href="https://ds.uth.gr/digital-systems-weather-station/"> αναπληρωτή καθηγητή Ονούφριου
+                Χαραλάμπους.
+            </a>
+        </div>
+        <div>
+            Τα δεδομένα που φαίνονται σε αυτήν την σελίδα αντιπροσωπεύουν μόνο μια μικρή μερίδα από αυτά που
+            συλλέγονται από τους σταθμούς.
+            <a target="_blank" href="https://writethatdown.site/greendigital/">Δείτε περισσότερες λεπτομέρεις εδώ
+                εδώ!</a>
+        </div>
+        <div class="m-4 text-center">Ο κώδικας της σελίδας δημιουργήθηκε από τον <a target="_blank"
+                href="https://tsiantakis.dev/el">Μιχαήλ Άγγελο Τσιαντάκη</a> πτυχιούχο του τμήματος και διατίθεται <a
+                href="">εδώ</a> με την άδεια AGPLv3.</div>
+    </footer>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="htmx.min.js"></script>
+</body>
+
+</html>
