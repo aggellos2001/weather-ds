@@ -45,7 +45,7 @@
     </div>
     <section class="container" hx-select-oob="#hum-bar,#pm25-bar,#pm10-bar">
         <div class="row">
-            <div class="col">
+            <div class="col-12 col-md">
                 <p>Θερμοκρασία</p>
                 <div hx-get="/weatherData" hx-trigger="load delay:1s, every 5m" hx-swap="outerHTML"
                     hx-indicator="#spinner" hx-target="#temp-bar" class="progress" role="progressbar"
@@ -55,7 +55,7 @@
                 </div>
                 <span>(Εύρος τιμών μπάρας -20 - +50)</span>
             </div>
-            <div class="col">
+            <div class="col-12 col-md">
                 <p>Υγρασία</p>
                 <div hx-swap-oob='true' class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"
                     style="height:30px">
@@ -76,7 +76,7 @@
             </p>
         </div>
         <div class="row my-3">
-            <div class="col">
+            <div class="col-12 col-md">
                 <p>PM2.5</p>
                 <div hx-swap-oob=true class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="110"
                     style="height:30px">
@@ -84,7 +84,7 @@
                 </div>
                 <span>(Εύρος τιμών μπάρας 0-110)</span>
             </div>
-            <div class="col">
+            <div class="col-12 col-md">
                 <p>PM10</p>
                 <div hx-swap-oob="true" class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="240"
                     style="height:30px">
