@@ -37,7 +37,10 @@
     <p class="htmx-indicator fs-4">
         Loading... <span id="spinner" class="spinner-border"></span>
     </p>
-    <div class="w-50 mx-auto text-center">
+    <div class="w-100 mx-auto text-center d-md-none">
+        <p id='last-updated' hx-swap-oob='true'></p>
+    </div>
+    <div class="w-50 mx-auto text-center d-none d-md-block">
         <p id='last-updated' hx-swap-oob='true'></p>
     </div>
     <section class="container" hx-select-oob="#hum-bar,#pm25-bar,#pm10-bar">
@@ -64,7 +67,11 @@
         <p class="my-3 fs-5">Στα πλαίσια του μαθήματος Εφαρμογές Ψηφιακών Συστημάτων στο Περιβάλλον
             τοποθετήθηκε αισθητήρας μέτρησης αιωρούμενων σωματιδίων ο οποίος
             μπορεί να μετρήσει τα σωματίδια PM1, PM2.5, PM4 και PM10.</p>
-        <div class="w-50 mx-auto text-center">
+        <div class="w-100 mx-auto text-center d-md-none">
+            <p id='last-updated-pm' hx-swap-oob='true' class='mx-1 px-1 rounded-4 text-bg-success fs-6 fst-italic'>
+            </p>
+        </div>
+        <div class="w-50 mx-auto text-center d-none d-md-block">
             <p id='last-updated-pm' hx-swap-oob='true' class='mx-1 px-1 rounded-4 text-bg-success fs-6 fst-italic'>
             </p>
         </div>
