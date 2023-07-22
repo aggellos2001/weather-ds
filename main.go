@@ -21,6 +21,7 @@ import (
 	"embed"
 	"encoding/csv"
 	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
 	"strconv"
@@ -51,8 +52,9 @@ var (
 
 func main() {
 
-	fs := http.FileServer(http.FS(appDir))
-	http.Handle("/", fs)
+	serverRoot, _ := fs.Sub(appDir, "app")
+	fileServer := http.FileServer(http.FS(serverRoot))
+	http.Handle("/", fileServer)
 	http.HandleFunc("/weatherData", handleWeather)
 
 	log.Fatalln(http.ListenAndServe(":3000", nil))
@@ -134,64 +136,65 @@ func handleWeather(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(response))
 
 }
-func handleHum(w http.ResponseWriter, r *http.Request) {
-	updateWeatherData()
-	w.WriteHeader(http.StatusOK)
-	responseData := ResponseData{}
-	if weatherStorage.Humidity < 30 {
-		responseData.Background = "bg-info"
-	} else if weatherStorage.Humidity < 60 {
-		responseData.Background = "bg-success"
-	} else {
-		responseData.Background = "bg-danger"
-	}
-	responseData.Value = weatherStorage.Humidity
-	responseData.Width = (weatherStorage.Humidity / 100) * 100
-	response := fmt.Sprintf("<div id='hum-bar' class='progress-bar %s'  style='width: %f%%;'>%.2f%%</div>", responseData.Background, responseData.Width, responseData.Value)
-	w.Write([]byte(response))
-}
 
-func handlePM25(w http.ResponseWriter, r *http.Request) {
-	updateWeatherData()
-	w.WriteHeader(http.StatusOK)
-	responseData := ResponseData{}
-	if weatherStorage.PM25 < 15 {
-		responseData.Background = "bg-info"
-	} else if weatherStorage.PM25 < 30 {
-		responseData.Background = "bg-success"
-	} else if weatherStorage.PM25 < 55 {
-		responseData.Background = "bg-warning-subtle"
-	} else if weatherStorage.PM25 < 110 {
-		responseData.Background = "bg-warning"
-	} else {
-		responseData.Background = "bg-danger"
-	}
-	responseData.Value = weatherStorage.PM25
-	responseData.Width = (weatherStorage.PM25 / 110) * 100
-	response := fmt.Sprintf("<div id='pm-25' class='progress-bar %s'  style='width: %f%%;'>%.1f</div>", responseData.Background, responseData.Width, responseData.Value)
-	w.Write([]byte(response))
-}
+// func handleHum(w http.ResponseWriter, r *http.Request) {
+// 	updateWeatherData()
+// 	w.WriteHeader(http.StatusOK)
+// 	responseData := ResponseData{}
+// 	if weatherStorage.Humidity < 30 {
+// 		responseData.Background = "bg-info"
+// 	} else if weatherStorage.Humidity < 60 {
+// 		responseData.Background = "bg-success"
+// 	} else {
+// 		responseData.Background = "bg-danger"
+// 	}
+// 	responseData.Value = weatherStorage.Humidity
+// 	responseData.Width = (weatherStorage.Humidity / 100) * 100
+// 	response := fmt.Sprintf("<div id='hum-bar' class='progress-bar %s'  style='width: %f%%;'>%.2f%%</div>", responseData.Background, responseData.Width, responseData.Value)
+// 	w.Write([]byte(response))
+// }
 
-func handlePM10(w http.ResponseWriter, r *http.Request) {
-	updateWeatherData()
-	w.WriteHeader(http.StatusOK)
-	responseData := ResponseData{}
-	if weatherStorage.PM10 < 25 {
-		responseData.Background = "bg-info"
-	} else if weatherStorage.PM10 < 50 {
-		responseData.Background = "bg-success"
-	} else if weatherStorage.PM10 < 90 {
-		responseData.Background = "bg-warning-subtle"
-	} else if weatherStorage.PM10 < 180 {
-		responseData.Background = "bg-warning"
-	} else {
-		responseData.Background = "bg-danger"
-	}
-	responseData.Value = weatherStorage.PM10
-	responseData.Width = (weatherStorage.PM10 / 240) * 100
-	response := fmt.Sprintf("<div id='pm-10' class='progress-bar %s'  style='width: %f%%;'>%.1f</div>", responseData.Background, responseData.Width, responseData.Value)
-	w.Write([]byte(response))
-}
+// func handlePM25(w http.ResponseWriter, r *http.Request) {
+// 	updateWeatherData()
+// 	w.WriteHeader(http.StatusOK)
+// 	responseData := ResponseData{}
+// 	if weatherStorage.PM25 < 15 {
+// 		responseData.Background = "bg-info"
+// 	} else if weatherStorage.PM25 < 30 {
+// 		responseData.Background = "bg-success"
+// 	} else if weatherStorage.PM25 < 55 {
+// 		responseData.Background = "bg-warning-subtle"
+// 	} else if weatherStorage.PM25 < 110 {
+// 		responseData.Background = "bg-warning"
+// 	} else {
+// 		responseData.Background = "bg-danger"
+// 	}
+// 	responseData.Value = weatherStorage.PM25
+// 	responseData.Width = (weatherStorage.PM25 / 110) * 100
+// 	response := fmt.Sprintf("<div id='pm-25' class='progress-bar %s'  style='width: %f%%;'>%.1f</div>", responseData.Background, responseData.Width, responseData.Value)
+// 	w.Write([]byte(response))
+// }
+
+// func handlePM10(w http.ResponseWriter, r *http.Request) {
+// 	updateWeatherData()
+// 	w.WriteHeader(http.StatusOK)
+// 	responseData := ResponseData{}
+// 	if weatherStorage.PM10 < 25 {
+// 		responseData.Background = "bg-info"
+// 	} else if weatherStorage.PM10 < 50 {
+// 		responseData.Background = "bg-success"
+// 	} else if weatherStorage.PM10 < 90 {
+// 		responseData.Background = "bg-warning-subtle"
+// 	} else if weatherStorage.PM10 < 180 {
+// 		responseData.Background = "bg-warning"
+// 	} else {
+// 		responseData.Background = "bg-danger"
+// 	}
+// 	responseData.Value = weatherStorage.PM10
+// 	responseData.Width = (weatherStorage.PM10 / 240) * 100
+// 	response := fmt.Sprintf("<div id='pm-10' class='progress-bar %s'  style='width: %f%%;'>%.1f</div>", responseData.Background, responseData.Width, responseData.Value)
+// 	w.Write([]byte(response))
+// }
 
 func updateWeatherData() {
 	if weatherStorage.LastWeatherUpdate.Add(20 * time.Minute).After(time.Now()) {
