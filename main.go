@@ -55,7 +55,7 @@ func main() {
 	serverRoot, _ := fs.Sub(appDir, "app")
 	fileServer := http.FileServer(http.FS(serverRoot))
 	http.Handle("/", fileServer)
-	http.HandleFunc("/greendigital/app/weatherData", handleWeather)
+	http.HandleFunc("/weatherData", handleWeather)
 
 	log.Fatalln(http.ListenAndServe(":3000", nil))
 }

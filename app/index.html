@@ -24,10 +24,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Μετεωρολογικός Σταθμός Ψηφιακών Συστημάτων</title>
     <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
 </head>
 
 <body class="mx-auto bg-light-subtle w-75 pt-2 pb-5">
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-12 col-md">
                 <p>Θερμοκρασία</p>
-                <div hx-get="/greendigital/app/weatherData" hx-trigger="load delay:1s, every 5m" hx-swap="outerHTML"
+                <div hx-get="weatherData" hx-trigger="load delay:1s, every 5m" hx-swap="outerHTML"
                     hx-indicator="#spinner" hx-target="#temp-bar" class="progress" role="progressbar"
                     aria-valuemin="-20" aria-valuemax="50" style="height:30px">
                     <div id="temp-bar" class="progress-bar" style="width: 0%;">
