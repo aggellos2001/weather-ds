@@ -57,7 +57,7 @@ func main() {
 	http.Handle("/", fileServer)
 	http.HandleFunc("/weatherData", handleWeather)
 
-	log.Fatalln(http.ListenAndServe(":3000", nil))
+	log.Fatalln(http.ListenAndServe("127.0.0.1:3000", nil))
 }
 
 func handleWeather(w http.ResponseWriter, r *http.Request) {
